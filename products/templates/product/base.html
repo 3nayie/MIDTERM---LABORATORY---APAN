@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Product Management{% endblock %}</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin:0; padding:0; }
+    nav {
+      background:#fff;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+      padding:15px 30px;
+      display:flex;
+      justify-content: flex-start; /* all links on the same line */
+      align-items:center;
+      position:sticky;
+      top:0;
+      gap: 15px; /* small gap between links */
+    }
+    nav a {
+      text-decoration:none;
+      color:#333;
+      font-weight:bold;
+      margin:0;
+    }
+    nav a:hover { color:#007bff; }
+    .container { max-width:1000px; margin:20px auto; padding:0 20px; }
+    h1 { color:#333; }
+    table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    th, td { padding:12px; border-bottom:1px solid #ddd; text-align:left; }
+    th { background:#f9f9f9; }
+    tr:hover { background:#f1f1f1; }
+    .btn { display:inline-block; padding:6px 12px; margin:5px 0; background:#007bff; color:#fff; text-decoration:none; border-radius:4px; font-size:0.9em; }
+    .btn:hover { background:#0056b3; }
+  </style>
+</head>
+<body>
+  <nav>
+      <a href="{% url 'product:product-list' %}">Home</a>
+      {% if user.is_staff %}
+        <a href="/admin/">Admin</a>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <span>Hi, {{ user.username }}</span>
+        <a href="{% url 'admin:logout' %}">Logout</a>
+      {% else %}
+        <a href="/admin/login/">Login</a>
+      {% endif %}
+  </nav>
+
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
